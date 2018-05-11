@@ -1,0 +1,426 @@
+<!-- ------------------------------------------------------------ Image ---------------------------------------------------------->
+
+  
+  <img src="{{ section.settings.image.src | img_url: 'pico' }}" alt="{{ section.settings.image.alt | escape }}" id="{{ ection.settings.image.id }}" 
+  class="else-parameters {% if section.settings.image.attached_to_variant %} here-is-variation-image {% endif %} product-id-is-{{ section.settings.image.product_id }} for-loop-{{ section.settings.image.position }} height-{{ section.settings.image.height }}  width-{{ section.settings.image.width }} proportions-{{ section.settings.image.aspect_ratio }}" >
+
+  {% if section.settings.image.attached_to_variant %}
+    {% for image in product.images %}
+        {% for variant in image.variants %}
+                {{ image.alt }} - used for the variant: {{ variant.title }}
+          {% endfor %}
+    {% endfor %}
+  {% endif %}
+
+  <img src="{{ section.settings.image.src | img_url: 'icon' }}" alt="{{ section.settings.image.alt | escape }}">
+  <img src="{{ section.settings.image.src | img_url: 'thumb' }}" alt="{{ section.settings.image.alt | escape }}">
+  <img src="{{ section.settings.image.src | img_url: 'small' }}" alt="{{ section.settings.image.alt | escape }}">
+  <img src="{{ section.settings.image.src | img_url: 'compact' }}" alt="{{ section.settings.image.alt | escape }}">
+  <img src="{{ section.settings.image.src | img_url: 'medium' }}" alt="{{ section.settings.image.alt | escape }}">
+  <img src="{{ section.settings.image.src | img_url: 'large' }}" alt="{{ section.settings.image.alt | escape }}">
+  <img src="{{ section.settings.image.src | img_url: 'grande' }}" alt="{{ section.settings.image.alt | escape }}">
+  <img src="{{ section.settings.image.src | img_url: 'original' }}" alt="{{ section.settings.image.alt | escape }}">
+  <img src="{{ section.settings.image.src | img_url: 'master' }}" alt="{{ section.settings.image.alt | escape }}">
+  <img src="{{ section.settings.image.src | img_url: '860x320' }}" alt="{{ section.settings.image.alt | escape }}">
+  <img src="{{ section.settings.image.src | img_url: '1564x' }}" alt="{{ section.settings.image.alt | escape }}">
+
+
+<!-- ------------------------------------------------------------ select ---------------------------------------------------------->
+  <p>Select is set to {{ section.settings.select }}</p>
+<!-- ------------------------------------------------------------ url ---------------------------------------------------------->
+<a href="{{ section.settings.url }}">Button link</a>
+<!-- ------------------------------------------------------------ text ---------------------------------------------------------->
+  {% unless section.settings.text == blank %}
+    <h2 >
+      {{ section.settings.text | escape }} //output html as string - a tags are not rendered
+    </h2>
+  {% endunless %}
+<!-- -------------------------------------------------------------- textarea ---------------------------------------------------------->
+
+  {% unless section.settings.textarea == blank %}
+    <div class="textarea-in-p-tag-automaticaly" >
+      {{ section.settings.textarea }}
+    </div>
+  {% endunless %}
+
+<!-- -------------------------------------------------------------- html ---------------------------------------------------------->
+
+  {% unless section.settings.code == blank %}
+    <div class="textarea-in-p-tag-automaticaly" >
+      {{ section.settings.code }}
+    </div>
+  {% endunless %}
+
+<!-- -------------------------------------------------------------- checkbox ---------------------------------------------------------->
+
+  {% if section.settings.checkbox %} <p>show this message if checkbox is checked </p> {% endif %}
+
+<!-- -------------------------------------------------------------- product ---------------------------------------------------------->
+
+  <!-- more in featured product section -->
+
+  {%- assign product = all_products[section.settings.product] -%}
+  {%- assign current_variant = product.selected_or_first_available_variant -%}
+  {%- assign featured_image = current_variant.featured_image | default: product.featured_image -%}
+
+  {% if product.available %} available for purchase
+  <div id="{{ product.handle }}-{{ product.id}}" >
+
+
+      {% if featured_image.src != blank %}
+        <img src="{{ featured_image | img_url: '480x480' }}" alt="{{ featured_image.alt | escape }}" data-product-featured-image>
+      {% endif %}
+      <h1><a href="{{ product.url }}">{{ product.title | default: onboarding_title }}</a></h1>
+      {{ product.description }}
+
+      {% for collection in product.collections %}
+          {{ collection.title }}
+      {% endfor %}
+
+      Price max {{ product.compare_at_price_max | money }}
+      Price min {{ product.compare_at_price_min }}
+      {% if  product.compare_at_price_varies %} 
+        Price max != Price min !!!
+      {% endif %}
+
+      Product Price  {{ product.price | money }}
+      Product max Price  {{ product.price_max | money }}
+      Product min Price  {{ product.price_min | money }}
+
+      {% if product.price_varies %}
+      Returns true if the product's variants have varying prices. Returns false if all of the product's variants have the same price.
+      {% endif %}
+
+      Selected variant id is - {{ product.selected_variant.id }}
+      Selected or first available variant id is - {{ product.selected_or_first_available_variant.id }}
+
+      {% for image in product.images %}
+          <img src="{{ image.src | product_img_url: 'medium' }}">
+      {% endfor %}
+
+      <!-- on product.wholesale.liquid -->
+      product template assigned - {{ product.template_suffix }} 
+      product type - {{ product.type }}
+      vendor of product - {{ product.vendor }}
+
+
+      {% for option in product.options %}
+          {{ option }}
+      {% endfor %}
+
+      {% for tag in product.tags %}
+          {{ tag }}
+      {% endfor %}
+
+      {% for option in product.options_with_values %}
+        <label>
+          {{ option.name }}
+          <select>
+            {% for value in option.values %}
+              <option {% if option.selected_value == value %}selected{% endif %}>
+                {{ value }}
+              </option>
+            {% endfor %}
+          </select>
+        </label>
+      {% endfor %}
+
+      {% if product.has_only_default_variant %}
+        <input name="id" value="{{ variant.id }}" type="hidden">
+      {% else %}
+        <select name="id">
+          {% for variant in product.variants %}
+            <option value="{{ variant.id }}">{{ variant.title }}</option>
+          {% endfor%}
+        </select>
+      {% endif %}
+
+    </div>
+
+  {% endif %}
+
+<!-- -------------------------------------------------------------- colection -------------------------------------------------------->
+  {%- assign collection = collections[section.settings.collection] -%} //rewrite global variable
+  
+
+  <a href="{{ collection.url }}" class="btn" id="{{ collection.handle }}-{{ collection.id }}">
+        {{ collection.title }}
+        Posted {{ collection.published_at }}
+        Template {{ collection.template_suffix }}
+       {% if collection.image %}<img href="{{ collection.image | img_url: 'medium' }}"> {% endif %}
+  </a>
+  {{ collection.description }}
+  Found products {{ collection.all_products_count }}
+  Currently Found products {{ collection.products_count  }}
+
+  {% for tag in collection.tags %}
+    {{ tag.title }}
+  {% endfor %}
+
+  {% for product_tag in collection.all_tags %}
+    {{ product_tag.title }}
+  {% endfor %}
+
+  {% for product_vendor in collection.all_vendors %}
+    {{ product_vendor | link_to_vendor }}
+  {% endfor %}
+
+  {% for product_type in collection.all_types %}
+    {{ product_type | link_to_type }}
+  {% endfor %}
+
+  {% if collection.current_type %}
+  Browse all our {{ collection.current_type | downcase }}.
+  {% endif %}
+  {% if collection.current_vendor %}
+  All products by {{ collection.current_vendor }}.
+  {% endif %}
+
+  {% for product in collection.products limit: product_limit %}
+      <div class="grid__item ">
+        {% include 'product-card-grid', max_height: max_height %} <!--snipet with name product-card-grid -->
+      </div>
+  {% endfor %}
+
+<!-- -------------------------------------------------------------- range ---------------------------------------------------------->
+  {% case section.settings.grid %} 
+    {% when 2 %}
+      {{ section.settings.grid }}
+      {%- assign max_height = 530 -%}
+      {%- assign grid_item_width = 'medium-up--one-half' -%}
+    {% when 3 %}
+      {{ section.settings.grid }}
+      {%- assign max_height = 345 -%}
+      {%- assign grid_item_width = 'small--one-half medium-up--one-third' -%}
+    {% when 4 %}
+      {{ section.settings.grid }}
+      {%- assign max_height = 250 -%}
+      {%- assign grid_item_width = 'small--one-half medium-up--one-quarter' -%}
+    {% when 5 %}
+      {{ section.settings.grid }}
+      {%- assign max_height = 195 -%}
+      {%- assign grid_item_width = 'small--one-half medium-up--one-fifth' -%}
+  {% endcase %}
+<!-- -------------------------------------------------------------- radio ---------------------------------------------------------->
+  {% case section.settings.radio %} //например, а вообще возвращает число
+    {% when 'all' %}
+      Radio button return "all" value
+
+    {% when 'selected' %}
+      Radio button return "selected" value
+  {% endcase %}
+
+<!-- -------------------------------------------------------------- video ---------------------------------------------------------->
+
+  {% if section.settings.video_url != blank %}
+    {% if section.settings.video_url.type == "youtube" %}
+      <iframe src="//www.youtube.com/embed/{{ section.settings.video_url.id }}?rel=0&showinfo=0&vq=720" width="850" height="480" frameborder="0" allowfullscreen></iframe>
+    {% endif %}
+    {% if section.settings.video_url.type == "vimeo" %}
+      <iframe src="//player.vimeo.com/video/{{ section.settings.video_url.id }}?byline=0&portrait=0&badge=0" width="850" height="480" frameborder="0" allowfullscreen></iframe>
+    {% endif %}
+  {% endif %}
+
+<!-- -------------------------------------------------------------- blocks ---------------------------------------------------------->
+
+  {% for block in section.blocks %}
+
+    {% if block.type == 'text' %}
+        Block text {{ block.settings.title }}
+        {% else %}
+        Block NON text {{ block.settings.title }}
+      {% endif %}
+  {% endfor %}
+
+
+<!-- ----------------------------------------------------------- link_list ---------------------------------------------------------->
+  {% for link in linklists[section.settings.link_list].links %}
+        {% assign child_list_handle = link.title | handleize %}
+        {% if linklists[child_list_handle].links != blank %}
+          <ul class="action-bar__menu--sub action-bar__menu list--inline  {% if child_list_handle == active_child_link_handle %} action-bar--show{% endif %}" id="{{ child_list_handle | capitalize }}" data-child-list-handle="{{ child_list_handle }}" role="navigation">
+            <li>
+              <button type="button" class="btn action-bar__back action-bar__link" aria-controls="SiteNav">
+                <span class="icon icon-arrow-left" aria-hidden="true"></span>
+                <span class="icon__fallback-text">{{ 'layout.navigation.action_bar_back' | t }}</span>
+              </button>
+            </li>
+            {% for childlink in linklists[child_list_handle].links %}
+              <li class="action-bar__menu-item {% if childlink.active %}action-bar--active{% endif %}">
+                <a href="{{ childlink.url }}" class="action-bar__link">{{ childlink.title | escape }}</a>
+              </li>
+            {% endfor %}
+          </ul>
+        {% endif %}
+  {% endfor %}
+
+
+<!-- ----------------------------------------------------------- color ---------------------------------------------------------->
+
+<div style="background: {{ section.settings.color }};">Section with BG color</div>
+
+
+
+{% schema %}
+  {
+    "name": "Universal template",
+    "class": "universal-section",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Just a header"
+      },
+      {
+        "type": "image_picker",
+        "id": "image",
+        "label": "Image"
+      },
+      {
+        "type": "select",
+        "id": "select",
+        "label": "Image alignment",
+        "default": "left",
+        "options": [
+          {
+            "value": "top",
+            "label": "Top"
+          },
+          {
+            "value": "bottom",
+            "label": "Bottom"
+          },
+          {
+            "value": "left",
+            "label": "Left"
+          },
+          {
+            "value": "right",
+            "label": "Right"
+          },
+          {
+            "value": "bg",
+            "label": "Background"
+          }
+        ]
+      },
+      {
+        "type": "text",
+        "id": "text",
+        "label": "Short text",
+        "default": "Short text must be here"
+      },
+      {
+        "type": "richtext",
+        "id": "textarea",
+        "label": "Long Text",
+        "default": "<p>Pair large text with an image to give focus to your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>"
+      },
+      {
+        "type": "url",
+        "id": "url",
+        "label": "Button link"
+      },
+      {
+        "type": "checkbox",
+        "id": "checkbox",
+        "label": "Show something",
+        "default": false
+      },
+      {
+        "type": "radio",
+        "id": "radio",
+        "label": "Select radio",
+        "default": "all",
+        "options": [
+          {
+            "value": "all",
+            "label": "All"
+          },
+          {
+            "value": "selected",
+            "label": "Selected"
+          }
+        ]
+      },
+      {
+        "type": "product",
+        "id": "product",
+        "label": "Product"
+      },
+      {
+        "id": "collection",
+        "type": "collection",
+        "label": "Collection"
+      },
+      {
+        "type": "range",
+        "id": "range",
+        "label": "Some number",
+        "min": 2,
+        "max": 5,
+        "step": 1,
+        "default": 3
+      },
+      {
+        "type": "html",
+        "id": "code",
+        "label": "HTML"
+      },
+      {
+        "type": "video_url",
+        "id": "video_url",
+        "label": "Video link",
+        "accept": ["youtube", "vimeo"],
+        "default": "https:\/\/www.youtube.com\/watch?v=_9VUPq3SxOc"
+      },
+      {
+        "type": "link_list",
+        "id": "link_list",
+        "label": "Menu",
+        "default": "main-menu"
+      },
+      {
+        "type": "paragraph",
+        "content": "It is just text in form of settings. Any customers who sign up will have an account created for them in Shopify. [View customers](/admin/customers?query=&accepts_marketing=1)"
+      },
+      {
+        "type": "color",
+        "id": "color",
+        "label": "Bar color",
+        "default": "#dbc18b"
+      }
+      
+    ],
+    "blocks": [
+      {
+        "type": "text",
+        "name": "Text",
+        "settings": [
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Heading",
+            "default": "Talk about your brand"
+          }
+        ]
+      },
+      {
+        "type": "nottext",
+        "name": "Non Text",
+        "settings": [
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Heading",
+            "default": "Talk about your brand"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Universal template",
+        "category": "Custom Content"
+      }
+    ]
+  }
+{% endschema %}
