@@ -1,0 +1,1116 @@
+<section class="tabs-section" data-animation-once="{{section.settings.intro-animate-once}}">
+
+	<div class="tabs-intro-container {% if section.settings.display-intro == 'no' %} hidden{% endif %}">
+		<div class="{% if section.settings.content-container-size == 'normal' %}container{% else %}container-fluid{% endif %}">
+			<div class="row">
+				<div class="col-xs-12">
+					<div class="tabs-intro-content-wrapper {% if section.settings.text-alignment == 'center' %} text-center{% elsif section.settings.text-alignment == 'right' %} text-right{% endif %}">
+						{% unless section.settings.intro-title == blank %}
+            	<h2 class="tabs-intro-content-title"{% if section.settings.intro-animate == 'yes' %} data-aos="{{section.settings.title-animate-effect}}" data-aos-duration="{{section.settings.intro-title-animate-duration}}" data-aos-delay="{{section.settings.intro-title-animate-delay}}"{% endif %}>{{ section.settings.intro-title }}</h2>
+            {% endunless %}
+            {% unless section.settings.intro-text == blank %}
+            	<div class="tabs-intro-content-text"{% if section.settings.intro-animate == 'yes' %} data-aos="{{section.settings.text-animate-effect}}" data-aos-duration="{{section.settings.intro-text-animate-duration}}" data-aos-delay="{{section.settings.intro-text-animate-delay}}"{% endif %}>{{ section.settings.intro-text }}</div>
+            {% endunless %}
+            {% if section.settings.intro-button-url != blank %}
+            	<a href="{{ section.settings.intro-button-url }}" class="btn" target="{{ section.settings.target }}"{% if section.settings.intro-animate == 'yes' %} data-aos="{{section.settings.button-animate-effect}}" data-aos-duration="{{section.settings.intro-button-animate-duration}}" data-aos-delay="{{section.settings.intro-button-animate-delay}}"{% endif %}>{{ section.settings.intro-button-text }}</a>
+            {% endif %}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="tabs-list-container">
+		<div class="{% if section.settings.content-container-size == 'normal' %}container{% else %}container-fluid{% endif %}">
+			<div class="row">
+				<div class="col-xs-12">
+					<ul class="tab-list list-inline {% if section.settings.tabs-align == 'center' %} text-center{% elsif section.settings.tabs-align == 'right' %} text-right{% endif %} {% if section.settings.slide-line == 'yes' %} with-slide-line{% endif %}" data-autoplay="{{ section.settings.autoplay }}" data-autoplay-speed="{{ section.settings.autoplay-speed }}" data-fade-duration="{{ section.settings.fade-duration }}" data-slideline-speed="{{ section.settings.slideline-speed }}">
+						{% for tab in section.blocks %}
+							<li class="tab">
+								<a href="javascript:void(0);" class="tab-link">
+									{% if tab.settings.use-tab-image == "yes" %}
+										<span class="tab-box-icon">
+											{% if tab.settings.svg-code == "" %}
+											<img src="{{ tab.settings.tab-image | img_url: 'master' }}" alt="">
+											{% else %}
+											{{ tab.settings.svg-code }}
+											{% endif %}
+										</span>
+									{% endif %}
+									<span class="tab-box-text">{{ tab.settings.tab-text }}</span>
+								</a>
+							</li>
+						{% endfor %}
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="tabs-panel-container">
+		<div class="{% if section.settings.content-container-size == 'normal' %}container{% else %}container-fluid{% endif %}">
+			<div class="row">
+				<div class="col-xs-12">
+					<div class="tab-panel-container">
+						{% for tab in section.blocks %}
+							<div class="tab-panel">
+								<div class="tab-panel-content">
+									<div class="row">
+										<div class="col-xs-12 {% if tab.settings.content-size == 'half' %} col-sm-6{% endif %}{% if tab.settings.content-size == 'half' and tab.settings.content-align == 'left' %} col-sm-6 col-sm-push-6{% endif %}">
+											{% if tab.settings.use-panel-content-image == 'yes' %}
+												<div class="tab-panel-image-block {% if tab.settings.text-align == 'center' %} text-center{% endif %}"{% if tab.settings.panel-content-animate == 'yes' %} data-aos="{{tab.settings.content-image-animate-effect}}" data-aos-duration="{{tab.settings.content-image-animate-duration}}" data-aos-delay="{{tab.settings.content-image-animate-delay}}"{% endif %}>
+													<img src="{{ tab.settings.panel-content-image | img_url: 'master' }}" alt="">
+												</div>
+											{% endif %}
+	            			</div>
+	            			<div class="col-xs-12 {% if tab.settings.content-size == 'half' %} col-sm-6{% endif %}{% if tab.settings.content-size == 'half' and tab.settings.content-align == 'left' %} col-sm-6 col-sm-pull-6{% endif %}">
+	            				<div class="tab-panel-text-block {% if tab.settings.text-align == 'center' %} text-center{% elsif tab.settings.text-align == 'right' %} text-right{% endif %}">
+						            {% unless tab.settings.panel-content-title == blank %}
+						            	<h2 class="panel-content-title"{% if tab.settings.panel-content-animate == 'yes' %} data-aos="{{tab.settings.content-title-animate-effect}}" data-aos-duration="{{tab.settings.content-title-animate-duration}}" data-aos-delay="{{tab.settings.content-title-animate-delay}}"{% endif %}>{{ tab.settings.panel-content-title }}</h2>
+						            {% endunless %}
+						            {% unless tab.settings.panel-content-text == blank %}
+						            	<div class="panel-content-text"{% if tab.settings.panel-content-animate == 'yes' %} data-aos="{{tab.settings.content-text-animate-effect}}" data-aos-duration="{{tab.settings.content-text-animate-duration}}" data-aos-delay="{{tab.settings.content-text-animate-delay}}"{% endif %}>{{ tab.settings.panel-content-text }}</div>
+						            {% endunless %}
+						            {% if tab.settings.panel-link-button != blank %}
+						            	<a href="{{ slide.settings.panel-link-button }}" class="btn" target="{{ tab.settings.panel-target }}"{% if tab.settings.panel-content-animate == 'yes' %} data-aos="{{tab.settings.content-button-animate-effect}}" data-aos-duration="{{tab.settings.content-button-animate-duration}}" data-aos-delay="{{tab.settings.content-button-animate-delay}}"{% endif %}>{{ tab.settings.panel-button-text }}</a>
+	            					{% endif %}
+	          					</div>
+	        					</div>
+									</div>
+								</div>
+							</div>
+						{% endfor %}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</section>
+
+
+{% schema %}
+{
+  "name": "tabs-section",
+  "class": "tabs-section-wrapper",
+
+  "settings": [
+		{
+		  "type": "select",
+		  "id": "content-container-size",
+		  "label": "Content container size:",
+		  "default": "normal",
+		  "options": [
+			  {
+				  "value": "normal",
+				  "label": "Normal"
+				},
+				{
+					"value": "fullwidth",
+					"label": "Full width"
+				}
+			]
+		},
+		{
+		  "type": "select",
+		  "id": "display-intro",
+		  "label": "Show intro content ?",
+		  "default": "yes",
+		  "options": [
+			  {
+				  "value": "yes",
+				  "label": "Yes"
+				},
+				{
+					"value": "no",
+					"label": "No"
+				}
+			]
+		},
+		{
+		  "type": "select",
+		  "id": "text-alignment",
+		  "label": "Intro block text align:",
+		  "default": "left",
+		  "options": [
+			  {
+				  "value": "left",
+				  "label": "Left"
+				},
+				{
+					"value": "center",
+					"label": "Center"
+				},
+				{
+					"value": "right",
+					"label": "Right"
+				}
+			]
+		},
+		{
+			"type": "text",
+			"id": "intro-title",
+			"label": "Intro block title",
+			"default": "Content Title goes here"
+		},
+		{
+	    "type": "richtext",
+	    "id": "intro-text",
+	    "label": "Intro block content text",
+	    "default": "<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Debitis, facere.</p>"
+	  },
+	  {
+		  "type": "url",
+		  "id": "intro-button-url",
+		  "label": "Intro button URL:"
+		},
+		{
+			"type": "text",
+			"id": "intro-button-text",
+			"label": "Intro button Text"
+		},
+		{
+			"type": "select",
+			"id": "target",
+			"label": "Open in new window",
+			"default": "yes",
+			"options": [
+				{
+					"value": "yes",
+					"label": "Yes"
+				},
+				{
+					"value": "no",
+					"label": "No"
+				}
+			]
+		},
+		{
+      "type": "text",
+      "id": "fade-duration",
+      "label": "Fade duration in ms",
+      "default": "500"
+    },
+		{
+			"type": "select",
+			"id": "autoplay",
+			"label": "Enable autoplay ?",
+			"default": "",
+			"options": [
+				{
+					"value": "1",
+					"label": "Yes"
+				},
+				{
+					"value": "",
+					"label": "No"
+				}
+			]
+		},
+		{
+      "type": "text",
+      "id": "autoplay-speed",
+      "label": "Autoplay speed in ms",
+      "default": "5000"
+    },
+    {
+			"type": "select",
+			"id": "tabs-align",
+			"label": "Align tabs",
+			"default": "left",
+			"options": [
+				{
+					"value": "left",
+					"label": "Left"
+				},
+				{
+					"value": "center",
+					"label": "Center"
+				},
+				{
+					"value": "right",
+					"label": "Right"
+				}
+			]
+		},
+		{
+			"type": "select",
+			"id": "slide-line",
+			"label": "Enable sliding line ?",
+			"default": "no",
+			"options": [
+				{
+					"value": "yes",
+					"label": "Yes"
+				},
+				{
+					"value": "no",
+					"label": "No"
+				}
+			]
+		},
+		{
+      "type": "text",
+      "id": "slideline-speed",
+      "label": "Slideline speed in ms",
+      "default": "300"
+    },
+    {
+			"type": "select",
+			"id": "intro-animate",
+			"label": "Enable animation for intro content ?",
+			"default": "no",
+			"options": [
+				{
+					"value": "yes",
+					"label": "Yes"
+				},
+				{
+					"value": "no",
+					"label": "No"
+				}
+			]
+		},
+		{
+			"type": "select",
+			"id": "intro-animate-once",
+			"label": "Enable animation only once ?",
+			"default": "yes",
+			"options": [
+				{
+					"value": "yes",
+					"label": "Yes"
+				},
+				{
+					"value": "no",
+					"label": "No"
+				}
+			]
+		},
+		{
+			"type": "select",
+			"id": "title-animate-effect",
+			"label": "Animation effect for intro title:",
+			"default": "fade-up",
+			"options": [
+				{
+					"value": "fade",
+					"label": "Fade"
+				},
+				{
+					"value": "fade-up",
+					"label": "Fade-up"
+				},
+				{
+					"value": "fade-down",
+					"label": "Fade-down"
+				},
+				{
+					"value": "fade-left",
+					"label": "Fade-left"
+				},
+				{
+					"value": "fade-right",
+					"label": "Fade-right"
+				},
+				{
+					"value": "flip-up",
+					"label": "Flip-up"
+				},
+				{
+					"value": "flip-down",
+					"label": "Flip-down"
+				},
+				{
+					"value": "flip-left",
+					"label": "Flip-left"
+				},
+				{
+					"value": "flip-right",
+					"label": "Flip-right"
+				},
+				{
+					"value": "slide-up",
+					"label": "Slide-up"
+				},
+				{
+					"value": "slide-down",
+					"label": "Slide-down"
+				},
+				{
+					"value": "slide-left",
+					"label": "Slide-left"
+				},
+				{
+					"value": "slide-right",
+					"label": "Slide-right"
+				},
+				{
+					"value": "zoom-in",
+					"label": "Zoom-in"
+				},
+				{
+					"value": "zoom-in-up",
+					"label": "Zoom-in-up"
+				},
+				{
+					"value": "zoom-in-down",
+					"label": "Zoom-in-down"
+				},
+				{
+					"value": "zoom-in-left",
+					"label": "Zoom-in-left"
+				},
+				{
+					"value": "zoom-in-right",
+					"label": "Zoom-in-right"
+				}
+			]
+		},
+		{
+      "type": "text",
+      "id": "intro-title-animate-duration",
+      "label": "Intro title animation duration in ms",
+      "default": "300"
+    },
+		{
+      "type": "text",
+      "id": "intro-title-animate-delay",
+      "label": "Intro title delay animation in ms",
+      "default": "0"
+    },
+		{
+			"type": "select",
+			"id": "text-animate-effect",
+			"label": "Animation effect for intro text:",
+			"default": "fade-up",
+			"options": [
+				{
+					"value": "fade",
+					"label": "Fade"
+				},
+				{
+					"value": "fade-up",
+					"label": "Fade-up"
+				},
+				{
+					"value": "fade-down",
+					"label": "Fade-down"
+				},
+				{
+					"value": "fade-left",
+					"label": "Fade-left"
+				},
+				{
+					"value": "fade-right",
+					"label": "Fade-right"
+				},
+				{
+					"value": "flip-up",
+					"label": "Flip-up"
+				},
+				{
+					"value": "flip-down",
+					"label": "Flip-down"
+				},
+				{
+					"value": "flip-left",
+					"label": "Flip-left"
+				},
+				{
+					"value": "flip-right",
+					"label": "Flip-right"
+				},
+				{
+					"value": "slide-up",
+					"label": "Slide-up"
+				},
+				{
+					"value": "slide-down",
+					"label": "Slide-down"
+				},
+				{
+					"value": "slide-left",
+					"label": "Slide-left"
+				},
+				{
+					"value": "slide-right",
+					"label": "Slide-right"
+				},
+				{
+					"value": "zoom-in",
+					"label": "Zoom-in"
+				},
+				{
+					"value": "zoom-in-up",
+					"label": "Zoom-in-up"
+				},
+				{
+					"value": "zoom-in-down",
+					"label": "Zoom-in-down"
+				},
+				{
+					"value": "zoom-in-left",
+					"label": "Zoom-in-left"
+				},
+				{
+					"value": "zoom-in-right",
+					"label": "Zoom-in-right"
+				}
+			]
+		},
+		{
+      "type": "text",
+      "id": "intro-text-animate-duration",
+      "label": "Intro text animation duration in ms",
+      "default": "300"
+    },
+		{
+      "type": "text",
+      "id": "intro-text-animate-delay",
+      "label": "Intro text delay animation in ms",
+      "default": "200"
+    },
+		{
+			"type": "select",
+			"id": "button-animate-effect",
+			"label": "Animation effect for intro button:",
+			"default": "fade-up",
+			"options": [
+				{
+					"value": "fade",
+					"label": "Fade"
+				},
+				{
+					"value": "fade-up",
+					"label": "Fade-up"
+				},
+				{
+					"value": "fade-down",
+					"label": "Fade-down"
+				},
+				{
+					"value": "fade-left",
+					"label": "Fade-left"
+				},
+				{
+					"value": "fade-right",
+					"label": "Fade-right"
+				},
+				{
+					"value": "flip-up",
+					"label": "Flip-up"
+				},
+				{
+					"value": "flip-down",
+					"label": "Flip-down"
+				},
+				{
+					"value": "flip-left",
+					"label": "Flip-left"
+				},
+				{
+					"value": "flip-right",
+					"label": "Flip-right"
+				},
+				{
+					"value": "slide-up",
+					"label": "Slide-up"
+				},
+				{
+					"value": "slide-down",
+					"label": "Slide-down"
+				},
+				{
+					"value": "slide-left",
+					"label": "Slide-left"
+				},
+				{
+					"value": "slide-right",
+					"label": "Slide-right"
+				},
+				{
+					"value": "zoom-in",
+					"label": "Zoom-in"
+				},
+				{
+					"value": "zoom-in-up",
+					"label": "Zoom-in-up"
+				},
+				{
+					"value": "zoom-in-down",
+					"label": "Zoom-in-down"
+				},
+				{
+					"value": "zoom-in-left",
+					"label": "Zoom-in-left"
+				},
+				{
+					"value": "zoom-in-right",
+					"label": "Zoom-in-right"
+				}
+			]
+		},
+		{
+      "type": "text",
+      "id": "intro-button-animate-duration",
+      "label": "Intro button animation duration in ms",
+      "default": "300"
+    },
+		{
+      "type": "text",
+      "id": "intro-button-animate-delay",
+      "label": "Intro button delay animation in ms",
+      "default": "400"
+    }
+  ],
+
+  "blocks": [
+    {
+      "type": "tab",
+      "name": "tab",
+      "settings": [
+      	{
+          "type": "select",
+          "id": "use-tab-image",
+          "label": "Insert image in tab button ?",
+          "default": "yes",
+          "options": [
+            {
+              "value": "yes",
+              "label": "Yes"
+            },
+            {
+              "value": "no",
+              "label": "No"
+            }
+          ]
+        },
+		    {
+		      "type": "html",
+		      "id": "svg-code",
+		      "label": "Paste icon svg inline code",
+		      "default": "<svg></svg>"
+		    },
+		    {
+		      "type": "image_picker",
+		      "id": "tab-image",
+		      "label": "If no svg code, choose icon image"
+		    },
+		    {
+		      "type": "text",
+		      "id": "tab-text",
+		      "label": "Tab text",
+		      "default": "Tabtext"
+		    },
+		    {
+          "type": "select",
+          "id": "content-size",
+          "label": "Panel Content size",
+          "default": "full",
+          "options": [
+            {
+              "value": "full",
+              "label": "Full width"
+            },
+            {
+              "value": "half",
+              "label": "Half width"
+            }
+          ]
+        },
+        {
+          "type": "select",
+          "id": "content-align",
+          "label": "Panel Content alignment",
+          "default": "left",
+          "options": [
+            {
+              "value": "left",
+              "label": "Left alignment"
+            },
+            {
+              "value": "right",
+              "label": "Right alignment"
+            }
+          ]
+        },
+        {
+          "type": "select",
+          "id": "text-align",
+          "label": "Panel text align",
+          "default": "left",
+          "options": [
+            {
+              "value": "left",
+              "label": "Left"
+            },
+            {
+              "value": "center",
+              "label": "Center"
+            },
+            {
+              "value": "right",
+              "label": "Right"
+            }
+          ]
+        },
+        {
+          "type": "select",
+          "id": "use-panel-content-image",
+          "label": "Insert image in Content ?",
+          "default": "no",
+          "options": [
+            {
+              "value": "yes",
+              "label": "Yes"
+            },
+            {
+              "value": "no",
+              "label": "No"
+            }
+          ]
+        },
+        {
+          "type": "image_picker",
+          "id": "panel-content-image",
+          "label": "Choose panel content image"
+        },
+        {
+          "type": "text",
+          "id": "panel-content-title",
+          "label": "Panel content title",
+          "default": "Panel content Title goes here"
+        },
+        {
+		      "type": "html",
+		      "id": "panel-content-text",
+		      "label": "Paste content text",
+		      "default": "<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius, ea.<p><p>Lorem ipsum dolor sit amet.</p>"
+		    },
+		    {
+          "type": "url",
+          "id": "panel-link-button",
+          "label": "Content Button"
+        },
+        {
+          "type": "text",
+          "id": "panel-button-text",
+          "label": "Button Text"
+        },
+        {
+          "type": "select",
+          "id": "panel-target",
+          "label": "Open in new window",
+          "default": "yes",
+          "options": [
+            {
+              "value": "yes",
+              "label": "Yes"
+            },
+            {
+              "value": "no",
+              "label": "No"
+            }
+          ]
+        },
+        {
+					"type": "select",
+					"id": "panel-content-animate",
+					"label": "Enable animation for panel content ?",
+					"default": "no",
+					"options": [
+						{
+							"value": "yes",
+							"label": "Yes"
+						},
+						{
+							"value": "no",
+							"label": "No"
+						}
+					]
+				},
+				{
+					"type": "select",
+					"id": "content-image-animate-effect",
+					"label": "Animation effect for image:",
+					"default": "fade-up",
+					"options": [
+						{
+							"value": "fade",
+							"label": "Fade"
+						},
+						{
+							"value": "fade-up",
+							"label": "Fade-up"
+						},
+						{
+							"value": "fade-down",
+							"label": "Fade-down"
+						},
+						{
+							"value": "fade-left",
+							"label": "Fade-left"
+						},
+						{
+							"value": "fade-right",
+							"label": "Fade-right"
+						},
+						{
+							"value": "flip-up",
+							"label": "Flip-up"
+						},
+						{
+							"value": "flip-down",
+							"label": "Flip-down"
+						},
+						{
+							"value": "flip-left",
+							"label": "Flip-left"
+						},
+						{
+							"value": "flip-right",
+							"label": "Flip-right"
+						},
+						{
+							"value": "slide-up",
+							"label": "Slide-up"
+						},
+						{
+							"value": "slide-down",
+							"label": "Slide-down"
+						},
+						{
+							"value": "slide-left",
+							"label": "Slide-left"
+						},
+						{
+							"value": "slide-right",
+							"label": "Slide-right"
+						},
+						{
+							"value": "zoom-in",
+							"label": "Zoom-in"
+						},
+						{
+							"value": "zoom-in-up",
+							"label": "Zoom-in-up"
+						},
+						{
+							"value": "zoom-in-down",
+							"label": "Zoom-in-down"
+						},
+						{
+							"value": "zoom-in-left",
+							"label": "Zoom-in-left"
+						},
+						{
+							"value": "zoom-in-right",
+							"label": "Zoom-in-right"
+						}
+					]
+				},
+				{
+		      "type": "text",
+		      "id": "content-image-animate-duration",
+		      "label": "Content image animation duration in ms",
+		      "default": "300"
+		    },
+				{
+		      "type": "text",
+		      "id": "content-image-animate-delay",
+		      "label": "Content image delay animation in ms",
+		      "default": "0"
+		    },
+				{
+					"type": "select",
+					"id": "content-title-animate-effect",
+					"label": "Animation effect for content title:",
+					"default": "fade-up",
+					"options": [
+						{
+							"value": "fade",
+							"label": "Fade"
+						},
+						{
+							"value": "fade-up",
+							"label": "Fade-up"
+						},
+						{
+							"value": "fade-down",
+							"label": "Fade-down"
+						},
+						{
+							"value": "fade-left",
+							"label": "Fade-left"
+						},
+						{
+							"value": "fade-right",
+							"label": "Fade-right"
+						},
+						{
+							"value": "flip-up",
+							"label": "Flip-up"
+						},
+						{
+							"value": "flip-down",
+							"label": "Flip-down"
+						},
+						{
+							"value": "flip-left",
+							"label": "Flip-left"
+						},
+						{
+							"value": "flip-right",
+							"label": "Flip-right"
+						},
+						{
+							"value": "slide-up",
+							"label": "Slide-up"
+						},
+						{
+							"value": "slide-down",
+							"label": "Slide-down"
+						},
+						{
+							"value": "slide-left",
+							"label": "Slide-left"
+						},
+						{
+							"value": "slide-right",
+							"label": "Slide-right"
+						},
+						{
+							"value": "zoom-in",
+							"label": "Zoom-in"
+						},
+						{
+							"value": "zoom-in-up",
+							"label": "Zoom-in-up"
+						},
+						{
+							"value": "zoom-in-down",
+							"label": "Zoom-in-down"
+						},
+						{
+							"value": "zoom-in-left",
+							"label": "Zoom-in-left"
+						},
+						{
+							"value": "zoom-in-right",
+							"label": "Zoom-in-right"
+						}
+					]
+				},
+				{
+		      "type": "text",
+		      "id": "content-title-animate-duration",
+		      "label": "Content title animation duration in ms",
+		      "default": "300"
+		    },
+				{
+		      "type": "text",
+		      "id": "content-title-animate-delay",
+		      "label": "Content title delay animation in ms",
+		      "default": "0"
+		    },
+				{
+					"type": "select",
+					"id": "content-text-animate-effect",
+					"label": "Animation effect for content text:",
+					"default": "fade-up",
+					"options": [
+						{
+							"value": "fade",
+							"label": "Fade"
+						},
+						{
+							"value": "fade-up",
+							"label": "Fade-up"
+						},
+						{
+							"value": "fade-down",
+							"label": "Fade-down"
+						},
+						{
+							"value": "fade-left",
+							"label": "Fade-left"
+						},
+						{
+							"value": "fade-right",
+							"label": "Fade-right"
+						},
+						{
+							"value": "flip-up",
+							"label": "Flip-up"
+						},
+						{
+							"value": "flip-down",
+							"label": "Flip-down"
+						},
+						{
+							"value": "flip-left",
+							"label": "Flip-left"
+						},
+						{
+							"value": "flip-right",
+							"label": "Flip-right"
+						},
+						{
+							"value": "slide-up",
+							"label": "Slide-up"
+						},
+						{
+							"value": "slide-down",
+							"label": "Slide-down"
+						},
+						{
+							"value": "slide-left",
+							"label": "Slide-left"
+						},
+						{
+							"value": "slide-right",
+							"label": "Slide-right"
+						},
+						{
+							"value": "zoom-in",
+							"label": "Zoom-in"
+						},
+						{
+							"value": "zoom-in-up",
+							"label": "Zoom-in-up"
+						},
+						{
+							"value": "zoom-in-down",
+							"label": "Zoom-in-down"
+						},
+						{
+							"value": "zoom-in-left",
+							"label": "Zoom-in-left"
+						},
+						{
+							"value": "zoom-in-right",
+							"label": "Zoom-in-right"
+						}
+					]
+				},
+				{
+		      "type": "text",
+		      "id": "content-text-animate-duration",
+		      "label": "Intro text animation duration in ms",
+		      "default": "300"
+		    },
+				{
+		      "type": "text",
+		      "id": "content-text-animate-delay",
+		      "label": "Intro text delay animation in ms",
+		      "default": "200"
+		    },
+				{
+					"type": "select",
+					"id": "content-button-animate-effect",
+					"label": "Animation effect for content button:",
+					"default": "fade-up",
+					"options": [
+						{
+							"value": "fade",
+							"label": "Fade"
+						},
+						{
+							"value": "fade-up",
+							"label": "Fade-up"
+						},
+						{
+							"value": "fade-down",
+							"label": "Fade-down"
+						},
+						{
+							"value": "fade-left",
+							"label": "Fade-left"
+						},
+						{
+							"value": "fade-right",
+							"label": "Fade-right"
+						},
+						{
+							"value": "flip-up",
+							"label": "Flip-up"
+						},
+						{
+							"value": "flip-down",
+							"label": "Flip-down"
+						},
+						{
+							"value": "flip-left",
+							"label": "Flip-left"
+						},
+						{
+							"value": "flip-right",
+							"label": "Flip-right"
+						},
+						{
+							"value": "slide-up",
+							"label": "Slide-up"
+						},
+						{
+							"value": "slide-down",
+							"label": "Slide-down"
+						},
+						{
+							"value": "slide-left",
+							"label": "Slide-left"
+						},
+						{
+							"value": "slide-right",
+							"label": "Slide-right"
+						},
+						{
+							"value": "zoom-in",
+							"label": "Zoom-in"
+						},
+						{
+							"value": "zoom-in-up",
+							"label": "Zoom-in-up"
+						},
+						{
+							"value": "zoom-in-down",
+							"label": "Zoom-in-down"
+						},
+						{
+							"value": "zoom-in-left",
+							"label": "Zoom-in-left"
+						},
+						{
+							"value": "zoom-in-right",
+							"label": "Zoom-in-right"
+						}
+					]
+				},
+				{
+		      "type": "text",
+		      "id": "content-button-animate-duration",
+		      "label": "Content button animation duration in ms",
+		      "default": "300"
+		    },
+				{
+		      "type": "text",
+		      "id": "content-button-animate-delay",
+		      "label": "Content button delay animation in ms",
+		      "default": "400"
+		    }
+      ]
+    }
+  ],
+
+  "presets": [
+    {
+      "name": "Tabs section",
+      "category": "Custom Sections"
+    }
+  ]
+}
+{% endschema %}
+
+
+
+

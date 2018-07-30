@@ -1,0 +1,322 @@
+  <div data-scrollax-parent="true" class=" video-section {% if section.settings.intro == 'intro' %}intro{% endif %}">
+    <div class="video-section-content" data-scrollax="properties:{'translateY':'-150%'}" style="background-color: {{ section.settings.color }};">
+      <div class="bg-overlay visible-xs {% if section.settings.textpos == 'right' %} bg-left {% else %} bg-right {% endif %} " 
+             style="background-image: url({{ section.settings.image.src | img_url: 'master' }});  
+                    background-size: cover; " 
+             data-scrollax="properties:{'translateY':'-30%'}">
+        {% if section.settings.video_url != blank %}
+          <a href="#video-{{ section.id }}" class="modal-open visible-xs video-btn btn-{{ section.settings.btn_type }} btn-{{ section.settings.video_button }} pos-{{ section.settings.video_button }}">
+              {% if section.settings.btn_type == 'color' %}
+                <img class="first" src="{{ 'first-state.png' |  file_img_url:'master' }}">
+              <img class="last" src="{{ 'second-state.png' |  file_img_url:'master' }}">
+              {% else %}
+                {% assign file = section.settings.btn_type | prepend: 'video-'  | append: '.png' %}
+                <img class="{{ section.settings.btn_type }}-img" src="{{ file |  asset_img_url:'master' }}">
+
+              {% endif %}
+          </a>
+        {% endif %}
+      </div>
+            
+      <div class="container">
+          <div class="video-section-content-wrapper">
+            <div class=" visible-xs {% if section.settings.bg %}bg-triangle{% endif %}">
+                {% if section.settings.bg %}
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 334.8046875 289.94921875" role="img" style="stroke-width: 0px;" preserveAspectRatio="none">
+                    <g>
+                        <path d="M167.402 0l167.403 289.949H0L167.402 0z"/>
+                    </g>
+                </svg>
+                 {% endif %}
+          </div>
+          	<div class="content-{{ section.settings.content }} row" >
+              <div class="col-xs-12 col-sm-6 {% if section.settings.textpos == 'right' %} col-sm-offset-6 {% endif %}"
+                   >
+                <div class="content-inner {% if section.settings.textpos == 'right' %} pull-right {% endif %} text-{{ section.settings.textalign}}">
+                	<h2 class="video-section-title">{{ section.settings.title }}</h2>
+                    <h3 class="video-section-subtitle">{{ section.settings.subtitle }}</h3>
+                    {{ section.settings.textarea }}
+                    {% if section.settings.url != blank %} 
+                        <a href="{{ section.settings.url }}" class=" btn  btn-{{ section.settings.type }}">{{ section.settings.button }}</a>
+                    {% endif %}
+                </div>
+                
+              </div>
+        </div>
+            <div class="wrapper-shadow">
+            	<img src="{{ 'bg_mv2.png'  | asset_img_url: 'master'}}">
+            </div>	
+          </div>
+            
+      </div>
+      
+    </div>
+<!--     parallax -->
+    
+    <div class="bg-overlay hidden-xs  {% if section.settings.textpos == 'right' %} bg-left {% else %} bg-right {% endif %}" 
+          data-parallax="scroll" data-image-src="{{ section.settings.image.src | img_url: 'master' }}" 
+         style="  background-image: url({{ section.settings.image.src | img_url: 'master' }});  
+                /*background-attachment: fixed; */
+                {% if section.settings.textpos == 'right' %} background-position: left center; {% else %} background-position: right center;  {% endif %}
+                background-size: cover; " 
+         data-scrollax="properties:{'translateY':'-30%'}"></div>
+	<div class=" hidden-xs {% if section.settings.bg %}bg-triangle{% endif %}">
+          {% if section.settings.bg %}
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 334.8046875 289.94921875" role="img" style="stroke-width: 0px;" preserveAspectRatio="none">
+              <g>
+                  <path d="M167.402 0l167.403 289.949H0L167.402 0z"/>
+              </g>
+          </svg>
+           {% endif %}
+    </div>
+    
+    
+    {% if section.settings.video_url != blank %}
+        <a href="#video-{{ section.id }}" class="modal-open hidden-xs video-btn btn-{{ section.settings.btn_type }} btn-{{ section.settings.video_button }} pos-{{ section.settings.video_button }}">
+            {% if section.settings.btn_type == 'color' %}
+              <img class="first" src="{{ 'first-state.png' |  file_img_url:'master' }}">
+            <img class="last" src="{{ 'second-state.png' |  file_img_url:'master' }}">
+            {% else %}
+              {% assign file = section.settings.btn_type | prepend: 'video-'  | append: '.png' %}
+              <img class="{{ section.settings.btn_type }}-img" src="{{ file |  asset_img_url:'master' }}">
+
+            {% endif %}
+        </a>
+
+          <div class="modal-window video-window" id="video-{{ section.id }}">
+              <div class="modal-content-wrapper" data-offset="100">
+                  <button class="modal-close">
+                      {% include 'icon-close' %}
+                  </button>
+                  <div class="modal-content-block">
+                      <div class="modal-content-block-header">
+                      </div>
+                      <div class="modal-content-block-body">
+                          {% if section.settings.video_url.type == "youtube" %}
+                            <iframe id="frame-video-{{ section.id }}" src="//www.youtube.com/embed/{{ section.settings.video_url.id }}?rel=0&showinfo=0&vq=720" width="850" height="480" frameborder="0" allowfullscreen></iframe>
+                          {% endif %}
+                          {% if section.settings.video_url.type == "vimeo" %}
+                            <iframe src="//player.vimeo.com/video/{{ section.settings.video_url.id }}?byline=0&portrait=0&badge=0" width="850" height="480" frameborder="0" allowfullscreen></iframe>
+                          {% endif %}
+                      </div>
+                      <div class="modal-content-block-footer">
+                      </div>
+                  </div>
+              </div>
+          </div>
+
+          
+      {% endif %}
+    
+</div>
+<script type="text/javascript">
+//   jQuery(document).ready(function($){
+//     'use strict';
+
+//     $.Scrollax('');
+//   });
+</script>
+
+{% schema %}
+  {
+    "name": "Video section",
+    "settings": [
+		{
+        "type": "select",
+        "id": "intro",
+        "label": "Choose Intro",
+        "default": "normal",
+        "options": [
+          {
+			"value": "normal",
+            "label": "Normal"
+          },
+          {
+            "value": "intro",
+            "label": "Intro"
+          }
+        ]
+      },
+
+    {
+        "type": "select",
+        "id": "content",
+        "label": "Content width",
+        "default": "large",
+        "options": [
+          {
+            "value": "large",
+            "label": "Large"
+          },
+          {
+            "value": "normal",
+            "label": "Normal"
+          },
+          {
+            "value": "small",
+            "label": "Small"
+          }
+        ]
+      },
+    {
+        "type": "image_picker",
+        "id": "image",
+        "label": "Image"
+      },
+    
+      {
+        "type": "color",
+        "id": "color",
+        "label": "Bg color",
+        "default": "#fff"
+      },
+    {
+        "type": "checkbox",
+        "id": "bg",
+        "label": "Use Triangle for text",
+        "default": false
+      },
+    {
+        "type": "video_url",
+        "id": "video_url",
+        "label": "Video link",
+        "accept": ["youtube", "vimeo"],
+        "default": "https:\/\/www.youtube.com\/watch?v=_9VUPq3SxOc"
+      },
+    {
+        "type": "select",
+        "id": "video_button",
+        "label": "Video button alignment",
+        "default": "center",
+        "options": [
+          {
+            "value": "left",
+            "label": "Left"
+          },
+          {
+            "value": "right",
+            "label": "Right"
+          },
+          {
+            "value": "center",
+            "label": "Center"
+          }
+        ]
+      },
+    {
+        "type": "select",
+        "id": "btn_type",
+        "label": "Video button type",
+        "default": "color",
+        "options": [
+          {
+            "value": "color",
+            "label": "Color"
+          },
+          {
+            "value": "white",
+            "label": "White"
+          },
+          {
+            "value": "black",
+            "label": "Black"
+          }
+        ]
+      },
+    {
+        "type": "text",
+        "id": "title",
+        "label": "Title",
+        "default": "Title here"
+      },
+    {
+        "type": "text",
+        "id": "subtitle",
+        "label": "SubTitle",
+        "default": "Sub Title here"
+      },
+      {
+        "type": "richtext",
+        "id": "textarea",
+        "label": "Text",
+        "default": "<p>Pair large text with an image to give focus to your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>"
+      },
+    {
+        "type": "select",
+        "id": "textpos",
+        "label": "Text position",
+        "default": "left",
+        "options": [
+          {
+            "value": "left",
+            "label": "Left"
+          },
+          {
+            "value": "right",
+            "label": "Right"
+          }
+        ]
+      },
+	{
+        "type": "select",
+        "id": "textalign",
+        "label": "Text align",
+        "default": "left",
+        "options": [
+          {
+            "value": "left",
+            "label": "Left"
+          },
+			{
+            "value": "center",
+            "label": "Center"
+          },
+          {
+            "value": "right",
+            "label": "Right"
+          }
+        ]
+      },
+	{
+        "type": "select",
+        "id": "type",
+        "label": "Button type",
+        "default": "light",
+        "options": [
+          {
+            "value": "light",
+            "label": "Light"
+          },
+          {
+            "value": "dark",
+            "label": "Dark"
+          }
+        ]
+      },
+    {
+        "type": "url",
+        "id": "url",
+        "label": "Button link"
+      },
+      {
+        "type": "text",
+        "id": "button",
+        "label": "Button text"
+      }
+  ],
+  "presets": [
+    {
+      "category": "Image",
+      "name": "Video"
+    }
+  ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+
+	
+{% endjavascript %}

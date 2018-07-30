@@ -296,3 +296,31 @@ function wc_custom_save_custom_fields( $post_id ) {
         update_post_meta( $post_id, '_height', '1' );
     }
 }
+
+/*-----------------------------------------------------Excerpt-------------------------------------------*/
+
+    function new_excerpt_more($more) {  
+        return '...';  
+    }  
+    add_filter('excerpt_more', 'new_excerpt_more');  
+
+
+    function clever_excerpt( $charlength=120, $excerpt='' ){
+        if($excerpt==''){ $excerpt = get_the_excerpt(); } 
+        //else { $excerpt = apply_filters('the_content', $excerpt); }
+        $charlength++;
+
+        if ( mb_strlen( $excerpt ) > $charlength ) {
+            $subex = mb_substr( $excerpt, 0, $charlength - 5 );
+            $exwords = explode( ' ', $subex );
+            $excut = - ( mb_strlen( $exwords[ count( $exwords ) - 1 ] ) );
+            if ( $excut < 0 ) {
+                echo mb_substr( $subex, 0, $excut );
+            } else {
+                echo $subex;
+            }
+            echo '...';
+        } else {
+            echo $excerpt;
+        }
+    }
