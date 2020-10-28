@@ -8,25 +8,29 @@ if ( ! defined( 'ABSPATH' ) ) {
 use Elementor\Controls_Manager;
 use Elementor\Core\Kits\Documents\Tabs\Global_Colors;
 use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
+use Elementor\Group_Control_Typography;
 use Elementor\Icons_Manager;
 use Elementor\Group_Control_Image_Size;
+use Elementor\Group_Control_Border;
+use Elementor\Group_Control_Box_Shadow;
+use Elementor\Group_Control_Text_Shadow;
 
-class Elementor_Custom_Widget extends \Elementor\Widget_Base {
+class Elementor_Test_Widget extends \Elementor\Widget_Base {
 
 	public function get_name() {
 		return 'opos-el-custom';
 	}
 
 	public function get_title() {
-		return __( 'Custom Elementor widget', 'oneplone' );
+		return __( 'Test Elementor widget', 'oneplone' );
 	}
 
 	public function get_icon() {
-		return 'eae-icons eicon-wordpress';
+		return 'eicon-wordpress';
 	}
 
 	public function get_categories() {
-		return [ 'oneplone' ];
+		return [ 'basic' ];
 	}
 
 	protected function _register_controls() {
@@ -44,10 +48,7 @@ class Elementor_Custom_Widget extends \Elementor\Widget_Base {
 				'type' => Controls_Manager::MEDIA,
 				'dynamic' => [
 					'active' => true,
-				],
-				'default' => [
-					'url' => Utils::get_placeholder_image_src(),
-				],
+				]
 			]
 		);
 
@@ -337,21 +338,6 @@ class Elementor_Custom_Widget extends \Elementor\Widget_Base {
 			]
 		);
 
-		$this->add_group_control(
-			Group_Control_Css_Filter::get_type(),
-			[
-				'name' => 'css_filters',
-				'selector' => '{{WRAPPER}} .elementor-image img',
-			]
-		);
-
-		$this->end_controls_tab();
-
-		$this->start_controls_tab( 'hover',
-			[
-				'label' => __( 'Hover', 'elementor' ),
-			]
-		);
 
 		$this->add_control(
 			'opacity_hover',
@@ -368,14 +354,6 @@ class Elementor_Custom_Widget extends \Elementor\Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .elementor-image:hover img' => 'opacity: {{SIZE}};',
 				],
-			]
-		);
-
-		$this->add_group_control(
-			Group_Control_Css_Filter::get_type(),
-			[
-				'name' => 'css_filters_hover',
-				'selector' => '{{WRAPPER}} .elementor-image:hover img',
 			]
 		);
 
