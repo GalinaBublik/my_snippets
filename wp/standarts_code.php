@@ -91,6 +91,113 @@ function my_search_form( $form ) {
 }
 
 
+/* ------------------------------------------------Main for theme -------------------------------------------------*/
+    function oneplsone_setup() {
+        
+        load_theme_textdomain( 'oneplsone' );
+
+        // Add default posts and comments RSS feed links to head.
+        add_theme_support( 'automatic-feed-links' );
+
+        add_theme_support( 'title-tag' );
+
+        
+        add_theme_support( 'post-thumbnails' );
+        //set_post_thumbnail_size( 1200, 9999 );
+        // add_theme_support('woocommerce'); // define('WOOCOMMERCE_USE_CSS',false);
+
+        if( function_exists('acf_add_options_page') ) {
+            acf_add_options_page();
+        }
+
+        // This theme uses wp_nav_menu() in two locations.
+        register_nav_menus( array(
+            'primary' => __( 'Primary Menu', 'oneplsone' ),
+        ) );
+
+        add_theme_support( 'html5', array(
+            'search-form',
+            'comment-form',
+            'comment-list',
+            'gallery',
+            'caption',
+        ) );
+
+
+    }
+    add_action( 'after_setup_theme', 'oneplsone_setup' );
+
+
+
+    function oneplsone_scripts_styles() {
+        // Add custom fonts, used in the main stylesheet.
+        wp_enqueue_style( 'gfonts', '//fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap');
+        wp_enqueue_style( 'awecome', get_template_directory_uri() . '/css/fontawesome-all.min.css');
+        wp_enqueue_style( 'dashicons' );
+
+        // Theme stylesheet.
+        wp_enqueue_style( 'bootstrap', get_template_directory_uri() . '/css/bootstrap.css');
+        wp_enqueue_style( 'custom-fonts', get_template_directory_uri() . '/css/custom-fonts.css');
+        wp_enqueue_style( 'slick', get_template_directory_uri() . '/css/slick.css');
+        wp_enqueue_style( 'reset', get_template_directory_uri() . '/css/reset.css');
+        wp_enqueue_style( 'oneplsone-style', get_stylesheet_uri() );
+
+        wp_enqueue_style( 'responsive', get_template_directory_uri() . '/css/responsive.css');
+        
+        // Load the html5 shiv.
+
+        wp_enqueue_style( 'slick', get_template_directory_uri() . '/css/slick.min.css');
+        wp_enqueue_script( 'swiper', get_template_directory_uri() . '/js/swiper.min.js', array(), NULL, true);
+
+        if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
+            wp_enqueue_script( 'comment-reply' );
+        }
+
+    
+
+        wp_enqueue_script( 'oneplsone-script', get_template_directory_uri() . '/js/custom.js', array( 'jquery' ) );
+
+        if( is_page_template('page-contact.php') ){
+            wp_enqueue_script( 'google-map', '//maps.googleapis.com/maps/api/js?key=AIzaSyDRz-WhBs-FhR4PWa0JYN12sdvQJhc4Z9M' );
+            wp_enqueue_script( 'map', get_theme_file_uri( '/js/map.js' ), array(), '1.0' );
+
+            wp_localize_script( 'map', 'localVars', get_local_vars() );
+
+        }
+
+        
+    }
+    add_action( 'wp_enqueue_scripts', 'oneplsone_scripts_styles' );
+
+
+   // add_filter( 'script_loader_tag', function($tag, $handle){
+   //      $custom_js = array();
+   //      //$custom_js = array('map', 'google-map', 'bootstrap', 'fancy'  );
+   //      //$custom_js = array('layerslider_js', 'jquery_easing', 'transit', 'layerslider_transitions'  ); //sliders js
+   //      //echo $tag;
+   //      return ( !is_admin() && !in_array($handle, $custom_js) && !preg_match('/plugins\/revslider|plugins\/LayerSlider/', $tag) )? str_replace(' src', ' defer src', $tag) : $tag;
+        
+   //  }, 10, 2);
+
+
+    /** Remove width & height images attributes */
+        function remove_images_width_height($content) {
+            $content = preg_replace('/<img(.*?)(width=\"\d+\")(.*?)>/iu', "<img$1 $3>", $content);
+            $content = preg_replace('/<img(.*?)(height=\"\d+\")(.*?)>/iu', "<img$1 $3>", $content);
+            return $content;
+        }
+        add_filter('the_content', 'remove_images_width_height');
+        add_filter('post_thumbnail_html', 'remove_images_width_height');
+
+
+    function get_local_vars(){
+        $vars = array();
+        $vars['zoom'] = (get_field('zoom', 'options'))? get_field('zoom', 'options') : '12';
+        $vars['address'] = get_field('address', 'options');
+
+        return $vars;
+    }
+
 /*------------------------------------ Pre get posts------------------------*/
 add_action( 'pre_get_posts', 'custom_pre_get_posts_query' );
  
@@ -216,6 +323,30 @@ function custom_pre_get_posts_query( $query ) {
         $content .= ob_get_clean();
         return $content; //shortcode must return html but NOT print!
     }
+    add_shortcode('socials','get_button_shortcode');
+    function get_button_shortcode($atts){
+        ob_start(); //on buffer if html will big or use get_template part
+        $atts = shortcode_atts(array(
+        ), $atts);
+        extract($atts); 
+            get_template_part('content', 'socials');
+        $content .= ob_get_clean();
+        return $content; //shortcode must return html but NOT print!
+    }
+
+    //<?php  'content-socials.php'
+    if( have_rows('socials', 'options') ):?>
+    <div class="soc-block">
+        <?php while ( have_rows('socials', 'options') ) : the_row(); ?>
+        <a href="<?php the_sub_field('link'); ?>" class="soc-item">
+            <i class="fa fa-<?php the_sub_field('title'); ?>" aria-hidden="true"></i>
+        </a>
+        <?php endwhile; ?>
+    </div>
+
+    <?php endif; 
+
+
 /*-----------------------------------------------------Post types-------------------------------------------*/
 
     add_action( 'init', 'create_post_type' );
@@ -323,4 +454,68 @@ function wc_custom_save_custom_fields( $post_id ) {
         } else {
             echo $excerpt;
         }
+    }
+/*-----------------------------------------------------Media button-------------------------------------------*/
+?>
+<script>
+    var video_frame; 
+
+        $( '.acf-file-uploader .acf-button' ).on( 'click', function( event ) {
+        event.preventDefault();
+
+        // if the file_frame has already been created, just reuse it
+        if ( video_frame ) {
+            video_frame.open();
+            return;
+        } 
+
+        video_frame = wp.media.frames.file_frame = wp.media({
+            title: 'Select mp4 video',
+            button: {
+                text: 'Select',
+            },
+            library : {
+                // uncomment the next line if you want to attach image to the current post
+                // uploadedTo : wp.media.view.settings.post.id, 
+                type : 'video'
+            },
+            multiple: true, // set this to true for multiple file selection
+
+        });
+
+        video_frame.on( 'select', function() {
+            video = video_frame.state().get('selection').first().toJSON();//.toJSON();
+            console.log(video);
+            // selection.add(wp.media.attachment(selected));
+            // do something with the file here
+            // $( '.acf-gallery-add' ).hide();
+            // if(video.length>0){
+                $('[name="acf[field_5d273630133e9]"]').attr('value', video.id);
+
+                $('.acf-file-uploader').addClass('has-value');
+                $('.file-icon img').attr('src', video.icon);
+                $('.file-info [data-name="title"], .file-info [data-name="filename"]').text(video.title);
+                $('[data-name="filesize"]').addClass('file-length').text(video.filesizeHumanReadable).attr('data-length', video.fileLength );
+            // }
+            
+        });
+
+        video_frame.open();
+        
+    });
+        $( document ).on( 'click', '.acf-gallery-remove', function( event ) {
+        event.preventDefault();
+        $(this).closest('.acf-gallery-attachment').remove();
+            // console.log('fjhgggjjk');
+        
+    });
+</script>
+<?php /*Чтоб пользователи видели только свои картинки
+    add_filter( 'ajax_query_attachments_args', 'show_current_user_attachments', 10, 1 );
+    function show_current_user_attachments( $query = array() ) {
+        $user_id = get_current_user_id();
+        if( $user_id ) {
+            $query['author'] = $user_id;
+        }
+        return $query;
     }
