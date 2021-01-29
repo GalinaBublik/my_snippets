@@ -503,7 +503,7 @@ function wc_custom_save_custom_fields( $post_id ) {
         video_frame.open();
         
     });
-        $( document ).on( 'click', '.acf-gallery-remove', function( event ) {
+    $( document ).on( 'click', '.acf-gallery-remove', function( event ) {
         event.preventDefault();
         $(this).closest('.acf-gallery-attachment').remove();
             // console.log('fjhgggjjk');

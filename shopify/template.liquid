@@ -258,7 +258,36 @@
 
 <div style="background: {{ section.settings.color }};">Section with BG color</div>
 
+<!-- --------------------------------------custom repeater ---------------------------------------------------------->
 
+{% for i in (1..3) %}
+  <li>
+      <div class="t-item">
+          <div class="digits">
+            {% assign title = 'option' | append: i %}
+            {% assign desc = 'option_desc' | append: i %}
+            {% assign option = block.settings[title] %}
+            {% assign part = option | split: ' ' %}
+<!--                                     {{ part | json }} -->
+            {% for p in part %}
+<!--                                     {{ forloop.index }}----{{ p }} -->
+              {% case forloop.index %}
+                {% when 1 %}
+                      <span class="digit first">{{ p }}</span>
+                    {% when 2 %}
+                  <span class="divider">{{ p }}</span>
+                    {% when 3 %}
+                  <span class="digit second">{{ p }}</span>
+                    {% when 4 %}
+                  <span class="units">{{ p }}</span>
+              {% endcase %}
+                          
+            {% endfor %}
+          </div>
+          <span class="text">{{ block.settings[desc] }}</span>
+      </div>
+  </li>
+{% endfor %}
 
 {% schema %}
   {
